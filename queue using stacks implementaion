@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+void push1(int);
+void push2(int);
+int pop1();
+int pop();
+void enqueue();
+void dequeue();
+void display();
+void create();
+int stack1[100], stack2[100];
+int top1 =-1,top2=-1;
+int count =0;
+int main(){
+    int choice;
+    printf("queue using stacks imple\n");
+    printf("1.enqueue\n2.dequeue\n3.dispaly\n4.exit\n");
+    create();
+    while(1){
+        printf("enter your choice");
+        scanf("%d",&choice);
+        switch(choice){
+           case 1:
+            enqueue();
+            break;
+            case 2:
+            dequeue();
+            break;
+            case 3:
+            display();
+            break;
+            case 4:
+            exit(0);
+            break;
+            default:
+            printf("invalid choice");
+            }
+    }
+}
+void create(){
+    top1 = top2 = -1;
+    
+}
+// *To push element to stack1
+void push1(int element){
+    stack[++top1]=element;  //  to push element to stack1
+}
+int pop(){
+    return(stack1[top--]);  //  to pop element from the stack 
+}
+// Function to enqueue element into the queue using stack 
+void enqueue(){
+    int data,i;
+    printf(" enter the data");
+    scanf("%d",&data);
+    
+}
+
+
