@@ -10,8 +10,7 @@ struct node*newNode(int data){
     node->data=data;
     node->left=NULL;
     node->right=NULL;
-     
-     return (node);
+  return (node);
 }
 void printPostorder(struct node*node){
     if(node== NULL)
@@ -19,20 +18,39 @@ void printPostorder(struct node*node){
     printPostorder(node->left);
     printPostorder(node->right);
     printf("%d",node->data);
+    printf(" ");
 }
 void printInorder(struct node*node){
     if(node==NULL)
     return;
     printInorder(node->left);
     printf("%d",node->data);
+    printf(" ");
     printInorder(node->right);
-    
-}
-    
-void preorder(struct node*node){
+}   
+void printPreorder(struct node*node){
     if(node == NULL)
     return;
-   printf("%d",node->data);
-    printInorder(node->left);
-    printInorder(node->right);
+   printf("%d",node->data );
+   printf(" ");
+    printPreorder(node->left );
+    printPreorder(node->right );
+}
+int main(){
+    int a,b,c,d,e,f;
+    printf("enter values :");
+    scanf("%d %d %d %d %d %d",&a,&b,&c,&d,&e,&f);
+    struct node*root = newNode(a);
+    root->left =newNode(b);
+    root->right=newNode(c);
+    root->left->left = newNode(d);
+    root->left->right = newNode(e);
+    root->right->right=newNode(f);
+    printf("\n Preorder : \n");
+    printPreorder( root);
+    printf("\n Inorder : \n");
+    printInorder( root);
+    printf("\n Postorder : \n");
+    printPostorder( root);
+    return 0;
 }
