@@ -1,0 +1,139 @@
+#include<stdio.h>
+    int dequeue[MAX];
+    int front =-1,rear=-1;
+    void insert_rear(void);
+    void inssrt_front(void);
+    void delete_rear(void);
+    void delete_front(void);
+    void dispaly(void);
+    int main(){
+        int choice;
+       while(1){
+           printf("\n1.INSERT AT REAR");
+           printf("\n2.INSERT AT FRONT");
+           printf("\n3.DELETER FROM REAR");
+           printf("\n4.DELETER FROM FRONT");
+           printf("\n5.DISPLAY");
+           printf("\n6.EXIT");
+           printf("\nENTER YOUR CHOICE");
+           scanf("%d",&choice);
+           switch(choice){
+               case 1 :
+               insert_rear();
+               break;
+               case 2 :
+               insert_front();
+               break;
+               case 3:
+               delete_rear();
+               break;
+               case 4:
+               delete_front();
+               break;
+               case 5:
+               display();
+               break;
+               case 6:
+               EXIT(0);
+               default:
+               printf("INVALID CHOICE");
+                  }}}
+        void insert_rear(){
+            int val;
+            printf("\n ENTER THE VALUE TO ADD");
+            scanf("%d",&val);
+            if(front == 0 && rear==MAX-1 || (front == rear +1 )){
+                printf("\nOVERFLOW//");
+            }
+            
+            if(front == -1){
+                front=0;
+                rear=0;
+            }
+            else{
+                if(rear == MAX-1) rear=0;
+                else rear = rear+1;
+            }
+            deque[rear]=val;
+        }
+        void insert_front(){
+            int val;
+            printf("ENTER THE VALUE TO ADD");
+            scanf("%d",&val);
+            if(front == 0 && rear == MAX-1) || (front == rear+1)){
+                printf("\n OVERFLOW");
+            }
+            if(front == -1){
+                front = 0;
+                rear = 0;
+            }
+            else{
+                if(front == 0) front =MAX-1;
+                else front=front-1;
+            }
+            deque[front]=val;
+        }
+        void delete_rear(){
+            if(front == -1){
+                printf("\nUNDERFLOW");
+                return;
+            }
+            printf("\n THE DELETED ELEMENT IS %d\n",deque[rear]);
+            if(front == rear){
+                front =-1;
+                rear =-1
+            }
+            else {
+                if(rear == 0) rear=MAX-1;
+                else  rear =rear-1;
+            }
+        }
+        void deleter_front(){
+            if(front == -1){
+                printf("\nUNDERFLOW");
+                return;
+            }
+            printf("\n THE DELETED ELEMENT Is %d\n",deque[front]);
+            if(front == rear){
+                front = -1;
+                rear = -1;
+            }
+            else {
+                if(front== MAX-1) front =0;
+                else front = front +1;
+            }
+        }
+        void display(){
+            int left = front, right =rear;
+            if(left ==-1){
+                printf("\n QUEUE IS EMPTY\n");
+                return;
+            }
+            printf("\n THE ELEMENTS IN THE QUEUE ARE : ");
+            if(left<=right){
+                while(left<=right){
+                    printf("%d\t",dequeue[left]);
+                    left++;
+                }
+            }
+            else{
+                while(front <= MAX-1){
+                    printf("%d\t",deque[left]);
+                    left++;
+                }
+                left =0;
+                while(left<=right){
+                    printf("%d\t",deque[left]);
+                    left++;
+                }
+            }
+            printf("\n");
+        }
+        
+                  
+           
+       
+    
+        
+   
+    
