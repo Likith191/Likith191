@@ -1,0 +1,40 @@
+                                                                                                          #include<stdio.h>
+int complete_node = 15;
+
+char tree[] = { '\0','D','A','F','E','B','R','T','G','Q','\0','\0','V','\0','J','L'};
+
+// function to get parent
+
+int get_parent(int index)
+{
+    if(tree[index]!='\0' && index>1 && index<=complete_node) //root has no parent
+        return tree[index/2];
+    return -1;
+}
+int get_left_children(int index)
+{
+    if(tree[index]!='\0'&& (index*2)<=complete_node)
+        return tree[2*index];
+    return -1;
+}
+int get_right_children(int index)
+{
+    // node is not null
+    // and the result must lie within the number of nodes for a complete binary tree
+    if(tree[index]!='\0' && ((2* index)+1)<=complete_node)
+        return tree[(2*index)+1];
+    return -1;
+}
+int main()
+{
+    int index ,p,l,r;
+    printf("ENTER VALUES: ");
+    scanf("%d",&index);
+    p = get_parent(index);
+    printf("Parent : %c ",p);
+    l = get_left_children(index);
+    printf("left : %c ",l);
+    r = get_right_children(index);
+    printf("right : %c ",r);
+    
+}
