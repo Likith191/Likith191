@@ -1,56 +1,186 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node{
+#include<stdbool.h>
+
+//Represent a node of binary tree
+struct node
+{
     int data;
-    struct node*left;
-    struct node*right;
+    struct node *left;
+    struct node *right;
 };
-struct node*newNode(int data){
-    struct node*node=(struct node *)malloc(sizeof(struct node));
-    node->data=data;
-    node->left=NULL;
-    node->right=NULL;
-  return (node);
+
+//Represent the root of binary tree
+struct node *root = NULL ;
+
+//createNode() will create a newNode
+struct node* createNode(int data)
+{
+    //create a new node
+    struct node *newNode = (struct node*)malloc(sizeof(struct node));
+    //Assign data to newNode, set left and right children to NULL
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    
+    return newNode;
 }
-void printPostorder(struct node*node){
-    if(node== NULL)
-    return ;
-    printPostorder(node->left);
-    printPostorder(node->right);
-    printf("%d",node->data);
-    printf(" ");
+
+//insert() will add new node to the binary search tree
+void insert(int data)
+{
+    //create a new node
+    struct node *newNode = createNode(data);
+    
+    //chect wheater tree is empty
+    if(root == NULL)
+    {
+        root = newNode;
+        return ;
+    }
+    else
+    {
+        //current node point to root of the tree
+        struct node *current = root, *parent = NULL;
+        
+        while(true)
+        {
+            //parent keep track off the parent node of current node
+            parent = current ;
+            
+            //if data is less than current's data,node will be inserted to the left
+            if(data<current-> data)
+            {
+                current = current->left;
+                if(current == NULL)
+                {
+                    parent ->left = newNode;
+                    return ;
+                }
+            }
+            //if data is greater than current's data,node will be inserted to the right
+            else
+            {
+                current = current -> right;
+                if(current == NULL)
+                {
+                    parent -> right = newNode;
+                    return ;
+                }
+            }
+        }
+    }
 }
-void printInorder(struct node*node){
-    if(node==NULL)
-    return;
-    printInorder(node->left);
-    printf("%d",node->data);
-    printf(" ");
-    printInorder(node->right);
-}   
-void printPreorder(struct node*node){
+
+//minNode() will find out the minimum node
+struct node* minNode(struct node *root)
+{
+    if(root ->left != NULL)
+     return minNode(root->left);
+   else
+     return root;
+}
+
+//deleteNode() will delete the given node from the binary search tree
+struct node * deleteNode(struct node *node,int value)
+{
     if(node == NULL)
-    return;
-   printf("%d",node->data );
-   printf(" ");
-    printPreorder(node->left );
-    printPreorder(node->right );
+    {
+        return NULL;
+        
+    }
+    else
+    {
+        if(value< node ->data)
+        node ->left = deleteNode(node -> left,value);
+    
+//value is greater than node's daata then,search the value in right subree
+  else if(value>node->data)
+      node->right = deleteNode(node->right,value);
+
+//if value is equal to node's data that is , we have found the node to be de
+else
+ {
+    // if node to be deleted has no child the,set the node to NULL
+    if(node->left == NULL && node->right == NULL)
+        node = NULL;
+    //if node to be deleted has only one right child
+    else if(node->left == NULL)
+    {
+        node = node->right;
+    }
+     //if node to be deleted has only one left child
+     else if(node->right == NULL)
+     {
+         node = node->left;
+     }
+     //if node to be deleted has two children
+     else
+     {
+         //then find the minimum node from right subtree
+         struct node *temp = minNode(node->right);
+         //exchange the data between node and temp
+         node->data = temp->data;
+         //delete the node duplicate node from right subtree
+         node->right = deleteNode(node->right,temp ->data);
+     }
+    }
+     return node;
+  }
 }
-int main(){
-    int a,b,c,d,e,f;
-    printf("enter values :");
-    scanf("%d %d %d %d %d %d",&a,&b,&c,&d,&e,&f);
-    struct node*root = newNode(a);
-    root->left =newNode(b);
-    root->right=newNode(c);
-    root->left->left = newNode(d);
-    root->left->right = newNode(e);
-    root->right->right=newNode(f);
-    printf("\n Preorder : \n");
-    printPreorder( root);
-    printf("\n Inorder : \n");
-    printInorder( root);
-    printf("\n Postorder : \n");
-    printPostorder( root);
-    return 0;
+
+//inorder() will perform inorder travel on binary search tree
+void inorderTraversal(struct node *node)
+{
+    //check wheater tree is empty
+    if(root == NULL)
+    {
+        printf("Tree is empty \n");
+        return;
+    }
+    else
+    {
+        if(node->left!=NULL)
+        inorderTraversal(node->left);
+        printf("%d ",node->data);
+        if(node->right!=NULL)
+        inorderTraversal(node->right);
+    }
+}
+int main()
+{
+    int n;
+    printf("Enter the no elements to insert");
+    scanf("%d",&n);
+    
+    for(int i=0;i<n;i++){
+        int p;
+        scanf("%d",&p);
+    insert(p);
+   
+        
+    }
+    printf("Binary search tree after insertion: \n");
+    //displays the binary tree
+    inorderTraversal(root);
+    
+    struct node *deletedNode = NULL;
+    //delete node 90 which has no children
+    int l;
+    printf("\nenter no elements to delete\n ");
+    scanf("%d",&l);
+    for(int i=0;i<l;i++){
+   printf("\nEnter the element ot delete");
+   int del;
+   scanf("%d",&del);
+    deletedNode = deleteNode(root,del);
+    printf("\nBinary search tree after deleting node %d: \n",del);
+    inorderTraversal(root);
+        
+    }
+   
+  return 0;
+    
+    
+    
 }
